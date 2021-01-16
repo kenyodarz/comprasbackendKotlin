@@ -1,5 +1,6 @@
 package com.cdmservicios.comprasbackend.security.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
@@ -30,9 +31,10 @@ class User {
 
     @NotBlank
     @Size(max = 120)
+    @JsonIgnore
     var password: String? = null
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "usuario_roles",
         joinColumns = [JoinColumn(name = "idusuario")],

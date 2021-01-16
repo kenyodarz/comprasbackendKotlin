@@ -18,7 +18,7 @@ class UserDetailsServiceImpl: UserDetailsService{
     @Transactional
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails? {
-        val user: User = repository!!.findByUsername(username)
+        val user: User = repository!!.findByUsuario(username)
                 .orElseThrow { UsernameNotFoundException("No se ha encontrado el usuario: $username") }
         return UserDetailsImpl.build(user)
     }

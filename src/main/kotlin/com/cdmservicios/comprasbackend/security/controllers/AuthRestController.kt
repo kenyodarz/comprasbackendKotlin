@@ -69,7 +69,7 @@ class AuthRestController {
     fun registerUser(@Valid @RequestBody signUpRequest: SignupRequest, result: BindingResult): ResponseEntity<Any> {
         // Validamos los Campos
         if (result.hasErrors()) return this.validar(result)
-        if (userRepository!!.existsByUsername(signUpRequest.username!!)) {
+        if (userRepository!!.existsByUsuario(signUpRequest.username!!)) {
             return ResponseEntity
                     .badRequest()
                     .body(MessageResponse("Error: Este nombre de usuario ya existe!"))
