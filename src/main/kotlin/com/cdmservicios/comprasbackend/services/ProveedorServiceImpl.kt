@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Service
 
 @Service
-class ProveedorServiceAPI(repository: ProveedorRepository) : GenericServiceImpl<Proveedor, Int>(), ProveedorServiceAPI {
+class ProveedorServiceImpl(repository: ProveedorRepository) : GenericServiceImpl<Proveedor, Int>(), ProveedorServiceAPI {
 
     private var repository: ProveedorRepository? = null
 

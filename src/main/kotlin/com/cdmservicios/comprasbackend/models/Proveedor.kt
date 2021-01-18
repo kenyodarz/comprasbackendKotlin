@@ -3,6 +3,7 @@ package com.cdmservicios.comprasbackend.models
 import com.cdmservicios.comprasbackend.security.models.User
 import java.util.*
 import javax.persistence.*
+import kotlin.collections.ArrayList
 
 
 @Entity
@@ -14,40 +15,40 @@ class Proveedor {
     var idproveedor: Int? = null
 
     @Column
-    private val nombreprovee: String? = null
+    var nombreprovee: String? = null
 
     @Column
-    private val nitprovee: String? = null
+    var nitprovee: String? = null
 
     @Column
-    private val direccionprovee: String? = null
+    var direccionprovee: String? = null
 
     @Column
-    private val telefonofijoprovee: String? = null
+    var telefonofijoprovee: String? = null
 
     @Column
-    private val celularprovee: String? = null
+    var celularprovee: String? = null
 
     @Column
-    private val correoprovee: String? = null
+    var correoprovee: String? = null
 
     @Column
-    private val paginawebprovee: String? = null
-
-    @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private val fechaderegistro: Date? = null
+    var paginawebprovee: String? = null
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private val fechaactualizado: Date? = null
+    var fechaderegistro: Date? = null
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    var fechaactualizado: Date? = null
 
     @OneToOne
     @JoinColumn(name = "idusuario")
-    private val usuario: User? = null
+    var usuario: User? = null
 
     @Column
-    private val ciudad: String? = null
+    var ciudad: String? = null
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -55,6 +56,18 @@ class Proveedor {
         joinColumns = [JoinColumn(name = "idproveedor")],
         inverseJoinColumns = [JoinColumn(name = "idproducto")]
     )
-    private val productos: List<Producto>? = null
+    private var productos: MutableList<Producto>? = null
 
+
+    init {
+        productos = ArrayList<Producto>()
+    }
+
+    fun addProducto(producto: Producto) {
+        productos!!.add(producto)
+    }
+
+    fun removeProducto(producto: Producto) {
+        productos!!.remove(producto)
+    }
 }

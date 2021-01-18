@@ -12,41 +12,33 @@ class Requisition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var idrequisicion: Int? = null
+    var idrequisicion: Int? = null
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(insertable = false)
-    private var numerorequisicion: Int? = null
+    var numerorequisicion: Int? = null
 
     @Column
-    private var referencia: String? = null
+    var referencia: String? = null
 
     @Column
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    private var fechaderegistro: Date? = null
+    var fechaderegistro: Date? = null
 
     @OneToOne
     @JoinColumn(name = "idusuario")
-    private var usuario: User? = null
+    var usuario: User? = null
 
     @OneToOne
     @JoinColumn(name = "idcentrodecostos")
-    private var centroDeCostos: CentroDeCostos? = null
+    var centroDeCostos: CentroDeCostos? = null
 
     @Column
-    private var observaciones: String? = null
+    var observaciones: String? = null
 
     @PrePersist
     fun prePersist() {
         fechaderegistro = Date()
-    }
-
-    fun getIdrequisicion(): Int? {
-        return idrequisicion
-    }
-
-    fun setIdrequisicion(idrequisicion: Int?) {
-        idrequisicion.also { this.idrequisicion = it }
     }
 }
