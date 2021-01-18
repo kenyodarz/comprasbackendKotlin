@@ -12,5 +12,9 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/requisitions")
 @Api(tags = ["requisitions"])
-class RequisitionRestController(serviceAPI: RequisitionServiceAPI) :
-    GenericRestController<Requisition, Int>(serviceAPI)
+class RequisitionRestController(override var serviceAPI: RequisitionServiceAPI) :
+    GenericRestController<Requisition, Int>(serviceAPI) {
+
+    override val all: List<Requisition>
+        get() = serviceAPI.findAllRequisition()
+}

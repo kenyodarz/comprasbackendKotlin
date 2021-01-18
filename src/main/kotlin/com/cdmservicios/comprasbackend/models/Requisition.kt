@@ -37,6 +37,12 @@ class Requisition {
     @Column
     var observaciones: String? = null
 
+    @Column(insertable = false)
+    var totales: Int? = null
+
+    @Column(insertable = false)
+    var pendientes: Int? = null
+
     @PrePersist
     fun prePersist() {
         fechaderegistro = Date()

@@ -40,6 +40,9 @@ class OrdenDeCompraRestController(
         )
     }
 
+    override val all: List<OrdenDeCompra>
+        get() = serviceAPI.findOrdenDeCompraGroupByProveedor()
+
     @GetMapping("/oco")
     fun findOrdenDeCompraGroupByProveedor(): ResponseEntity<Any> {
         return ResponseEntity.ok().body(serviceAPI.findOrdenDeCompraGroupByProveedor())
