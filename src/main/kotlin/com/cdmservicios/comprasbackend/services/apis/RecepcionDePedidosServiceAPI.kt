@@ -5,6 +5,6 @@ import com.cdmservicios.comprasbackend.shared.GenericServiceAPI
 
 
 interface RecepcionDePedidosServiceAPI : GenericServiceAPI<RecepcionDePedidos, Int> {
-    fun findRecepcionesDePedidosByPedido(idPedido: Int?): List<RecepcionDePedidos?>?
-    fun findRecepcionesPorPedidos(idPedido: Int?): Int?
+    fun findRecepcionesDePedidosByPedido(idPedido: Int): List<RecepcionDePedidos>
+    fun findRecepcionesPorPedidos(idPedido: Int): Int
 }

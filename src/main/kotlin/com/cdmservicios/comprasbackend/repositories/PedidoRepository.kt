@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 
 
 @Repository
-interface PedidoRepository : JpaRepository<Repository, Int> {
+interface PedidoRepository : JpaRepository<Pedido, Int> {
 
 
     @Query(
