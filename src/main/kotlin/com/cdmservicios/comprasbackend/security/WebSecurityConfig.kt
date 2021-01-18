@@ -64,6 +64,9 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
             .antMatchers("/configuration/**").permitAll()
             .antMatchers("/swagger-resources/**").permitAll()
             .antMatchers("/v2/api-docs").permitAll()
+            .antMatchers("/api/productos/image/**").permitAll()
+            .antMatchers("/api/ordenes/pdf/**").permitAll()
+            .antMatchers("/api/facturas/archivo/**").permitAll()
             .anyRequest().authenticated()
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter::class.java)
     }
