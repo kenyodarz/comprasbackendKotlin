@@ -7,5 +7,5 @@ import com.cdmservicios.comprasbackend.shared.GenericServiceAPI
 interface OrdenDeCompraServiceAPI: GenericServiceAPI<OrdenDeCompra, Int> {
     fun findOrdenDeCompraByRequisition(idRequisition: Int): Iterable<Long>
     fun findPedidosByOrdenDeCompraAndProducto(idRequisition: Int): List<Pedido>
-    fun findOrdenDeCompraGroupByProveedor(): List<Any>
+    fun findOrdenDeCompraGroupByProveedor():List<OrdenDeCompra>
 }

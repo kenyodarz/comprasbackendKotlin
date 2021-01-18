@@ -32,7 +32,7 @@ class OrdenDeCompraServiceImpl(repository: OrdenDeCompraRepository) : GenericSer
 
     @NotNull
     @Transactional
-    override fun findOrdenDeCompraGroupByProveedor(): List<Any> {
+    override fun findOrdenDeCompraGroupByProveedor(): List<OrdenDeCompra> {
         return this.repository!!.findOrdenDeCompraGroupByProveedor()
     }
 

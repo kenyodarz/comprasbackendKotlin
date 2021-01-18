@@ -79,6 +79,12 @@ class OrdenDeCompra {
     @Column
     var anulada: Boolean? = null
 
+    @Column(insertable = false)
+    var recibidosOCO: Int? = null
+
+    @Column(insertable = false)
+    var totalesOCO: Int? = null
+
     @PrePersist
     fun prePersis() {
         fechaderegistro = Date()

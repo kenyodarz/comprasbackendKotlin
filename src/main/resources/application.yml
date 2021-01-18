@@ -8,17 +8,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    generate-ddl: true
+#    generate-ddl: true
     properties:
       show_sql: true
       format_sql: true
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    open-in-view: false
+#    open-in-view: false
 
-logging:
-  level:
-    org:
-      hibernate:
-        type: trace
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        type: trace
 

@@ -24,9 +24,9 @@ interface OrdenDeCompraRepository : JpaRepository<OrdenDeCompra, Int> {
 
 
     @Query(
-        "select \n       \n       oc.idordendecompra, oc.numerodeorden, oc.fechadeorden, oc.condestinoa, oc.contacto, oc.concargoa, oc.transportador, oc.numerodeguia, oc.formadepago, oc.idusuario, oc.observaciones, oc.idrequisicion, oc.fechaderegistro, oc.fechadeactualizado, oc.iva, oc.exentodeiva, oc.centrodecostos, oc.valoriva, oc.anulada,\n       pv.idproveedor, pv.nombreprovee, pv.nitprovee, pv.direccionprovee, pv.telefonofijoprovee, pv.celularprovee, pv.correoprovee, pv.paginawebprovee, pv.fechaactualizado, pv.ciudad, \n       sum(ped.cantidadsolicitada) as totales, sum(r.recibidos) as recibidos \nfrom ordendecompra oc inner join proveedor pv on (pv.idproveedor = oc.idproveedor) \n    left join pedidos ped on ped.idordendecompra=oc.idordendecompra \n    left join ( \n        select rp.idpedido, sum(rp.cantidadrecibida) as recibidos \n        from recepciondepedidos rp \n        group by rp.idpedido order by 1) as r on r.idpedido = ped.idpedido \ngroup by oc.idordendecompra, pv.idproveedor, oc.numerodeorden order by oc.numerodeorden desc",
+        "select \n       oc.idordendecompra, oc.numerodeorden, oc.fechadeorden, oc.condestinoa, oc.contacto, oc.concargoa, oc.transportador, oc.numerodeguia, oc.formadepago, oc.idusuario, oc.observaciones, oc.idrequisicion, oc.fechaderegistro, oc.fechadeactualizado, oc.iva, oc.exentodeiva, oc.centrodecostos, oc.valoriva, oc.anulada,\n       pv.idproveedor, pv.nombreprovee, pv.nitprovee, pv.direccionprovee, pv.telefonofijoprovee, pv.celularprovee, pv.correoprovee, pv.paginawebprovee, pv.fechaactualizado, pv.ciudad, \n       sum(ped.cantidadsolicitada) as totalesOCO, sum(r.recibidos) as recibidosOCO \nfrom ordendecompra oc inner join proveedor pv on (pv.idproveedor = oc.idproveedor) \n    left join pedidos ped on ped.idordendecompra=oc.idordendecompra \n    left join ( \n        select rp.idpedido, sum(rp.cantidadrecibida) as recibidos \n        from recepciondepedidos rp \n        group by rp.idpedido order by 1) as r on r.idpedido = ped.idpedido \ngroup by oc.idordendecompra, pv.idproveedor, oc.numerodeorden order by oc.numerodeorden desc",
         nativeQuery = true
     )
-    fun findOrdenDeCompraGroupByProveedor(): List<Any>
+    fun findOrdenDeCompraGroupByProveedor(): List<OrdenDeCompra>
 
 }
