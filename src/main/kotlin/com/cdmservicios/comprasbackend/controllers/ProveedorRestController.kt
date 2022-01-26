@@ -5,7 +5,7 @@ import com.cdmservicios.comprasbackend.models.Proveedor
 import com.cdmservicios.comprasbackend.services.apis.ProductoServiceAPI
 import com.cdmservicios.comprasbackend.services.apis.ProveedorServiceAPI
 import com.cdmservicios.comprasbackend.shared.GenericRestController
-import io.swagger.annotations.Api
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 @CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/proveedores")
-@Api(tags = ["proveedores"])
+@Tag(name = "proveedores")
 class ProveedorRestController(
     override var serviceAPI: ProveedorServiceAPI,
     var productoServiceAPI: ProductoServiceAPI

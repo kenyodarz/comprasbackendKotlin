@@ -3,7 +3,7 @@ package com.cdmservicios.comprasbackend.controllers
 import com.cdmservicios.comprasbackend.models.Pedido
 import com.cdmservicios.comprasbackend.services.apis.PedidoServiceAPI
 import com.cdmservicios.comprasbackend.shared.GenericRestController
-import io.swagger.annotations.Api
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/pedidos")
-@Api(tags = ["pedidos"])
+@Tag(name = "pedidos")
 class PedidoRestController(override var serviceAPI: PedidoServiceAPI) : GenericRestController<Pedido, Int>(serviceAPI) {
 
     @GetMapping("/sinOrden/{id}")

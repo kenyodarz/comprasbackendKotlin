@@ -4,8 +4,10 @@ import com.cdmservicios.comprasbackend.security.keys.AuthEntryPointJwt
 import com.cdmservicios.comprasbackend.security.keys.AuthTokenFilter
 import com.cdmservicios.comprasbackend.security.services.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.Ordered
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -16,6 +18,9 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.filter.CorsFilter
 
 
 @Configuration
@@ -50,6 +55,21 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         authenticationManagerBuilder
             .userDetailsService<UserDetailsServiceImpl>(userDetailsService)
             .passwordEncoder(passwordEncoder())
+    }
+
+    @Bean
+    fun corsFilterOthers(): FilterRegistrationBean<*>? {
+        val source = UrlBasedCorsConfigurationSource()
+        val config = CorsConfiguration()
+        config.allowCredentials = true
+        config.allowedOrigins = listOf(CorsConfiguration.ALL)
+        config.allowedMethods = listOf("POST", "GET")
+        config.allowedHeaders = listOf(CorsConfiguration.ALL)
+        config.addExposedHeader("X-AuthToken")
+        source.registerCorsConfiguration("/**", config)
+        val bean: FilterRegistrationBean<*> = FilterRegistrationBean(CorsFilter(source))
+        bean.order = Ordered.HIGHEST_PRECEDENCE
+        return bean
     }
 
     override fun configure(http: HttpSecurity) {

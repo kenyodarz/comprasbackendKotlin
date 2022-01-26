@@ -1,20 +1,38 @@
 package com.cdmservicios.comprasbackend.core
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import io.swagger.v3.oas.models.ExternalDocumentation
+import io.swagger.v3.oas.models.OpenAPI
+import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.info.License
+import org.springdoc.core.GroupedOpenApi
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+
 
 @Configuration
-@EnableSwagger2
 class SwaggerConfiguration {
-    fun documentation(): Docket? {
-        return Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.withClassAnnotation(RestController::class.java))
-                .paths(PathSelectors.any())
-                .build()
+
+    @Bean
+    fun publicApi(): GroupedOpenApi? {
+        return GroupedOpenApi.builder()
+            .group("comprasbackend-controller")
+            .pathsToMatch("/api/**")
+            .build()
+    }
+
+    @Bean
+    fun springShopOpenAPI(): OpenAPI? {
+        return OpenAPI()
+            .info(
+                Info().title("ComprasCDM-Servicios API")
+                    .description("Aplicativo web de compras")
+                    .version("v1.0.0")
+                    .license(License().name("Apache 2.0").url("http://springdoc.org"))
+            )
+            .externalDocs(
+                ExternalDocumentation()
+                    .description("SpringShop Wiki Documentation")
+                    .url("https://springshop.wiki.github.org/docs")
+            )
     }
 }

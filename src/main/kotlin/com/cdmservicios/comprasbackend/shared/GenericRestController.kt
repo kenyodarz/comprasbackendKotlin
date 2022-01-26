@@ -1,33 +1,21 @@
 package com.cdmservicios.comprasbackend.shared
 
-import io.swagger.annotations.ApiOperation
-import io.swagger.annotations.ApiResponse
-import io.swagger.annotations.ApiResponses
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.BindingResult
 import org.springframework.validation.FieldError
+import org.springframework.web.bind.annotation.*
 import java.io.Serializable
 import java.util.function.Consumer
 import javax.validation.Valid
-import org.springframework.web.bind.annotation.PathVariable
-
-import org.springframework.web.bind.annotation.GetMapping
-
-import org.springframework.web.bind.annotation.RequestBody
-
-import org.springframework.web.bind.annotation.PostMapping
-
-import java.util.HashMap
-
-import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
 abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: GenericServiceAPI<T, ID>) {
-
-
 
 
     fun validar(result: BindingResult): ResponseEntity<*> {
@@ -41,31 +29,31 @@ abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: Gener
     @get:PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @get:ApiResponses(
         value = [ApiResponse(
-            code = 200,
-            message = "Entidades Listadas Correctamente"
-        ), ApiResponse(code = 401, message = "Usuario No Autorizado"), ApiResponse(
-            code = 403,
-            message = "Solicitud prohibida por el servidor"
-        ), ApiResponse(code = 404, message = "Entidad no encontrada")]
+            responseCode = "200",
+            description = "Entidades Listadas Correctamente"
+        ), ApiResponse(responseCode = "401", description = "Usuario No Autorizado"), ApiResponse(
+            responseCode = "403",
+            description = "Solicitud prohibida por el servidor"
+        ), ApiResponse(responseCode = "404", description = "Entidad no encontrada")]
     )
-    @get:ApiOperation(
-        value = "Listar Entidades",
-        notes = "servicio para listar todas las Entidades"
+    @get:Operation(
+        method = "Listar Entidades",
+        description = "servicio para listar todas las Entidades"
     )
     @get:GetMapping("/all")
     val all: List<T>
         get() = serviceAPI.getAll()
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obtener una Entidad", notes = "servicio para obtener una Entidad")
+    @Operation(method = "Obtener una Entidad", description = "servicio para obtener una Entidad")
     @ApiResponses(
         value = [ApiResponse(
-            code = 200,
-            message = "Entidad encontrada correctamente"
-        ), ApiResponse(code = 401, message = "Usuario No Autorizado"), ApiResponse(
-            code = 403,
-            message = "Solicitud prohibida por el servidor"
-        ), ApiResponse(code = 404, message = "Entidad no encontrada")]
+            responseCode = "200",
+            description = "Entidad encontrada correctamente"
+        ), ApiResponse(responseCode = "401", description = "Usuario No Autorizado"), ApiResponse(
+            responseCode = "403",
+            description = "Solicitud prohibida por el servidor"
+        ), ApiResponse(responseCode = "404", description = "Entidad no encontrada")]
     )
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     fun find(@PathVariable id: ID): ResponseEntity<*> {
@@ -74,14 +62,14 @@ abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: Gener
     }
 
     @PostMapping("/save")
-    @ApiOperation(value = "Crear/Editar una Entidad", notes = "servicio para crear o editar entidades")
+    @Operation(method = "Crear/Editar una Entidad", description = "servicio para crear o editar entidades")
     @ApiResponses(
-        value = [ApiResponse(code = 200, message = "Entidad creada correctamente"), ApiResponse(
-            code = 401,
-            message = "Usuario No Autorizado"
-        ), ApiResponse(code = 403, message = "Solicitud prohibida por el servidor"), ApiResponse(
-            code = 404,
-            message = "Entidad no encontrada"
+        value = [ApiResponse(responseCode = "200", description = "Entidad creada correctamente"), ApiResponse(
+            responseCode = "401",
+            description = "Usuario No Autorizado"
+        ), ApiResponse(responseCode = "403", description = "Solicitud prohibida por el servidor"), ApiResponse(
+            responseCode = "404",
+            description = "Entidad no encontrada"
         )]
     )
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
@@ -92,14 +80,14 @@ abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: Gener
     }
 
     @GetMapping("/delete/{id}")
-    @ApiOperation(value = "Eliminar una Entidad", notes = "servicio para eliminar entidades")
+    @Operation(method = "Eliminar una Entidad", description = "servicio para eliminar entidades")
     @ApiResponses(
-        value = [ApiResponse(code = 200, message = "Entidad eliminada correctamente"), ApiResponse(
-            code = 401,
-            message = "Usuario No Autorizado"
-        ), ApiResponse(code = 403, message = "Solicitud prohibida por el servidor"), ApiResponse(
-            code = 404,
-            message = "Entidad no encontrada"
+        value = [ApiResponse(responseCode = "200", description = "Entidad eliminada correctamente"), ApiResponse(
+            responseCode = "401",
+            description = "Usuario No Autorizado"
+        ), ApiResponse(responseCode = "403", description = "Solicitud prohibida por el servidor"), ApiResponse(
+            responseCode = "404",
+            description = "Entidad no encontrada"
         )]
     )
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")

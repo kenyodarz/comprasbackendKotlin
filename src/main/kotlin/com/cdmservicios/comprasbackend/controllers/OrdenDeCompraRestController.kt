@@ -4,7 +4,7 @@ import com.cdmservicios.comprasbackend.models.OrdenDeCompra
 import com.cdmservicios.comprasbackend.models.Pedido
 import com.cdmservicios.comprasbackend.services.apis.OrdenDeCompraServiceAPI
 import com.cdmservicios.comprasbackend.shared.GenericRestController
-import io.swagger.annotations.Api
+import io.swagger.v3.oas.annotations.tags.Tag
 import net.sf.jasperreports.engine.*
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.core.io.Resource
@@ -16,13 +16,12 @@ import java.io.IOException
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
-import java.util.*
 
 
 @CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/ordenes")
-@Api(tags = ["ordenes"])
+@Tag(name = "ordenes")
 class OrdenDeCompraRestController(
     override var serviceAPI: OrdenDeCompraServiceAPI
 
@@ -56,7 +55,9 @@ class OrdenDeCompraRestController(
             Class.forName("org.postgresql.Driver")
             con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/REQUISICION", "postgres", "cdm")
         } catch (ignored: ClassNotFoundException) {
+            ResponseEntity.internalServerError().body("ClassNotFoundException")
         } catch (ignored: SQLException) {
+            ResponseEntity.internalServerError().body("SQLException")
         }
         val sourceFileName = ResourceUtils
             .getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "ORDEN_DE_COMPRA.jrxml")

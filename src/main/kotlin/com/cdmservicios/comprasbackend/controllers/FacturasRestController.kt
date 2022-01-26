@@ -4,7 +4,7 @@ import com.cdmservicios.comprasbackend.models.Factura
 import com.cdmservicios.comprasbackend.services.apis.FacturaServiceAPI
 import com.cdmservicios.comprasbackend.services.apis.OrdenDeCompraServiceAPI
 import com.cdmservicios.comprasbackend.shared.GenericRestController
-import io.swagger.annotations.Api
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.core.io.Resource
 import org.springframework.http.HttpStatus
@@ -20,7 +20,7 @@ import javax.validation.Valid
 @CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/facturas")
-@Api(tags = ["facturas"])
+@Tag(name = "facturas")
 class FacturasRestController(
     override var serviceAPI: FacturaServiceAPI,
     var ordenServiceAPI: OrdenDeCompraServiceAPI

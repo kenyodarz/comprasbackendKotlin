@@ -21,4 +21,3 @@ spring:
 #    org:
 #      hibernate:
 #        type: trace
-
