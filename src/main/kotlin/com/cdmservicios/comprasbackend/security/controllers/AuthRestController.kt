@@ -1,11 +1,11 @@
 package com.cdmservicios.comprasbackend.security.controllers
 
+import com.cdmservicios.comprasbackend.security.keys.JwtUtils
 import com.cdmservicios.comprasbackend.security.models.ERole
 import com.cdmservicios.comprasbackend.security.models.Role
 import com.cdmservicios.comprasbackend.security.models.User
 import com.cdmservicios.comprasbackend.security.repositories.RoleRepository
 import com.cdmservicios.comprasbackend.security.repositories.UserRepository
-import com.cdmservicios.comprasbackend.security.keys.JwtUtils
 import com.cdmservicios.comprasbackend.security.services.UserDetailsImpl
 import com.cdmservicios.comprasbackend.security.utils.messages.JwtResponse
 import com.cdmservicios.comprasbackend.security.utils.messages.MessageResponse
@@ -24,7 +24,7 @@ import java.util.stream.Collectors
 import javax.validation.Valid
 
 @RestController
-@CrossOrigin(origins = ["*"], maxAge = 3600)
+@CrossOrigin(origins = ["*", "https://cdm-fs.com"], maxAge = 3600)
 @RequestMapping("/api/auth")
 class AuthRestController {
     @Autowired

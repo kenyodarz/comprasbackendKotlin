@@ -18,7 +18,7 @@ import java.sql.DriverManager
 import java.sql.SQLException
 
 
-@CrossOrigin(origins = ["*"], maxAge = 3600)
+@CrossOrigin(origins = ["*", "https://cdm-fs.com"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/ordenes")
 @Tag(name = "ordenes")

@@ -15,6 +15,7 @@ import javax.validation.Valid
 
 
 @RestController
+@CrossOrigin(origins = ["*", "https://cdm-fs.com"], maxAge = 3600)
 abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: GenericServiceAPI<T, ID>) {
 
 
@@ -56,9 +57,10 @@ abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: Gener
         ), ApiResponse(responseCode = "404", description = "Entidad no encontrada")]
     )
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    fun find(@PathVariable id: ID): ResponseEntity<*> {
-        val entity: T = serviceAPI.getOne(id) ?: return ResponseEntity.notFound().build<Any>()
-        return ResponseEntity.ok(entity!!)
+    fun getOne(@PathVariable id: ID): ResponseEntity<*> {
+        val entity: T =
+            serviceAPI.getOne(id) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso no encontrado")
+        return ResponseEntity.ok().body(entity)
     }
 
     @PostMapping("/save")
@@ -73,10 +75,9 @@ abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: Gener
         )]
     )
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    fun save(@RequestBody entity: @Valid T, result: BindingResult): ResponseEntity<*> {
-        return if (result.hasErrors()) {
-            validar(result)
-        } else ResponseEntity.status(HttpStatus.OK).body(serviceAPI.save(entity))
+    fun save(@RequestBody @Valid entity: T, result: BindingResult): ResponseEntity<*> {
+        return if (result.hasErrors()) validar(result)
+        else ResponseEntity.status(HttpStatus.CREATED).body(serviceAPI.save(entity))
     }
 
     @GetMapping("/delete/{id}")
@@ -91,13 +92,9 @@ abstract class GenericRestController<T, ID : Serializable>(val serviceAPI: Gener
         )]
     )
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    fun delete(@PathVariable id: ID): ResponseEntity<*> {
-        val entity: T = serviceAPI.getOne(id)!!
-        if (entity != null) {
-            serviceAPI.delete(id)
-        } else {
-            return ResponseEntity<Any>(HttpStatus.NOT_FOUND)
-        }
-        return ResponseEntity<T>(entity, HttpStatus.OK)
+    fun delete(@PathVariable id: ID): ResponseEntity<Any> {
+        val entity: T = serviceAPI.getOne(id) ?: return ResponseEntity<Any>(HttpStatus.NOT_FOUND)
+        serviceAPI.delete(id)
+        return ResponseEntity.ok().body(entity)
     }
 }

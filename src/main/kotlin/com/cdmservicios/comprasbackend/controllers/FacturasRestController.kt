@@ -17,7 +17,7 @@ import java.io.IOException
 import javax.validation.Valid
 
 
-@CrossOrigin(origins = ["*"], maxAge = 3600)
+@CrossOrigin(origins = ["*", "https://cdm-fs.com"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/facturas")
 @Tag(name = "facturas")

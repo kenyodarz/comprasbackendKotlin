@@ -4,10 +4,8 @@ import com.cdmservicios.comprasbackend.security.keys.AuthEntryPointJwt
 import com.cdmservicios.comprasbackend.security.keys.AuthTokenFilter
 import com.cdmservicios.comprasbackend.security.services.UserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.Ordered
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -58,18 +56,15 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     @Bean
-    fun corsFilterOthers(): FilterRegistrationBean<*>? {
+    fun corsFilter(): CorsFilter? {
         val source = UrlBasedCorsConfigurationSource()
         val config = CorsConfiguration()
         config.allowCredentials = true
-        config.allowedOrigins = listOf(CorsConfiguration.ALL)
-        config.allowedMethods = listOf("POST", "GET")
-        config.allowedHeaders = listOf(CorsConfiguration.ALL)
-        config.addExposedHeader("X-AuthToken")
+        config.allowedOriginPatterns = listOf("*")
+        config.allowedHeaders = listOf("Origin", "Content-Type", "Accept", "responseType", "Authorization")
+        config.allowedMethods = listOf("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH")
         source.registerCorsConfiguration("/**", config)
-        val bean: FilterRegistrationBean<*> = FilterRegistrationBean(CorsFilter(source))
-        bean.order = Ordered.HIGHEST_PRECEDENCE
-        return bean
+        return CorsFilter(source)
     }
 
     override fun configure(http: HttpSecurity) {
