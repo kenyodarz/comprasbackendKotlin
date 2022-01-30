@@ -6,11 +6,14 @@ import com.cdmservicios.comprasbackend.services.apis.OrdenDeCompraServiceAPI
 import com.cdmservicios.comprasbackend.shared.GenericRestController
 import io.swagger.v3.oas.annotations.tags.Tag
 import net.sf.jasperreports.engine.*
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.core.io.Resource
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.util.ResourceUtils
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 import java.io.IOException
 import java.sql.Connection
@@ -23,9 +26,17 @@ import java.sql.SQLException
 @RequestMapping("/api/ordenes")
 @Tag(name = "ordenes")
 class OrdenDeCompraRestController(
-    override var serviceAPI: OrdenDeCompraServiceAPI
+    override var serviceAPI: OrdenDeCompraServiceAPI,
 
-) : GenericRestController<OrdenDeCompra, Int>(serviceAPI) {
+    ) : GenericRestController<OrdenDeCompra, Int>(serviceAPI) {
+
+    private val logger: Logger = LoggerFactory.getLogger(RequisitionRestController::class.java)
+
+
+    override fun save(entity: OrdenDeCompra, result: BindingResult): ResponseEntity<*> {
+        logger.info("Entity -> {}", entity.toString())
+        return super.save(entity, result)
+    }
 
     @GetMapping("por/{id}")
     fun findOrdenDeCompraByRequisition(@PathVariable id: Int): Iterable<Long> {
